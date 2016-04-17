@@ -11,13 +11,13 @@ MAKEFILE      = Makefile.Debug
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DUNICODE -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
+DEFINES       = -DUNICODE -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -fno-keep-inline-dllexport -g -Wall -Wextra $(DEFINES)
 CXXFLAGS      = -pipe -fno-keep-inline-dllexport -g -frtti -Wall -Wextra -fexceptions -mthreads $(DEFINES)
-INCPATH       = -I..\WeatherApp -I. -ID:\Ohjelmat\QT\5.5\mingw492_32\include -ID:\Ohjelmat\QT\5.5\mingw492_32\include\QtWidgets -ID:\Ohjelmat\QT\5.5\mingw492_32\include\QtGui -ID:\Ohjelmat\QT\5.5\mingw492_32\include\QtANGLE -ID:\Ohjelmat\QT\5.5\mingw492_32\include\QtCore -Idebug -I. -ID:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\win32-g++ 
+INCPATH       = -I..\WeatherApp -I. -ID:\Ohjelmat\QT\5.5\mingw492_32\include -ID:\Ohjelmat\QT\5.5\mingw492_32\include\QtWidgets -ID:\Ohjelmat\QT\5.5\mingw492_32\include\QtGui -ID:\Ohjelmat\QT\5.5\mingw492_32\include\QtANGLE -ID:\Ohjelmat\QT\5.5\mingw492_32\include\QtNetwork -ID:\Ohjelmat\QT\5.5\mingw492_32\include\QtCore -Idebug -I. -ID:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\win32-g++ 
 LINKER      =        g++
-LFLAGS        =        -Wl,-subsystem,windows -mthreads
-LIBS        =        -lmingw32 -LD:/Ohjelmat/QT/5.5/mingw492_32/lib -lqtmaind -lshell32 -lQt5Widgetsd -lQt5Guid -lQt5Cored 
+LFLAGS        =        -Wl,-subsystem,console -mthreads
+LIBS        =        -LD:/Ohjelmat/QT/5.5/mingw492_32/lib -lQt5Widgetsd -lQt5Guid -lQt5Networkd -lQt5Cored 
 QMAKE         = D:\Ohjelmat\QT\5.5\mingw492_32\bin\qmake.exe
 IDC           = idc
 IDL           = midl
@@ -44,13 +44,19 @@ OBJECTS_DIR   = debug
 ####### Files
 
 SOURCES       = ..\WeatherApp\main.cpp \
-		..\WeatherApp\mainwindow.cpp debug\moc_mainwindow.cpp
+		..\WeatherApp\mainwindow.cpp \
+		..\WeatherApp\urldatafetcher.cpp debug\moc_mainwindow.cpp \
+		debug\moc_urldatafetcher.cpp
 OBJECTS       = debug/main.o \
 		debug/mainwindow.o \
-		debug/moc_mainwindow.o
+		debug/urldatafetcher.o \
+		debug/moc_mainwindow.o \
+		debug/moc_urldatafetcher.o
 
-DIST          =  ..\WeatherApp\mainwindow.h ..\WeatherApp\main.cpp \
-		..\WeatherApp\mainwindow.cpp
+DIST          =  ..\WeatherApp\mainwindow.h \
+		..\WeatherApp\urldatafetcher.h ..\WeatherApp\main.cpp \
+		..\WeatherApp\mainwindow.cpp \
+		..\WeatherApp\urldatafetcher.cpp
 QMAKE_TARGET  = WeatherApp
 DESTDIR        = debug\ #avoid trailing-slash linebreak
 TARGET         = WeatherApp.exe
@@ -86,10 +92,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) WeatherApp.zip $(SOURCES) $(DIST) ..\WeatherApp\WeatherApp.pro D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\spec_pre.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\qdevice.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\device_config.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\qconfig.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcollision.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcollision_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcore.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcore_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dinput.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dinput_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dlogic.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dlogic_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquick.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquick_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquickrenderer.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquickrenderer_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3drenderer.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3drenderer_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axbase.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axbase_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axcontainer.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axcontainer_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axserver.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axserver_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_bluetooth.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_bluetooth_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_bootstrap_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_clucene_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_concurrent.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_concurrent_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_core.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_core_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_dbus.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_dbus_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_declarative.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_declarative_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_designer.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_designer_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_designercomponents_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_enginio.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_enginio_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_gui.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_gui_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_help.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_help_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_location.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_location_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_multimedia.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_multimedia_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_multimediawidgets.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_network.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_network_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_nfc.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_nfc_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_opengl.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_opengl_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_openglextensions.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_openglextensions_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_platformsupport_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_positioning.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_positioning_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_printsupport.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_printsupport_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qml.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qml_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qmldevtools_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qmltest.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qmltest_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quick.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quick_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quickparticles_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quickwidgets.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quickwidgets_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_script.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_script_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_scripttools.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_scripttools_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_sensors.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_sensors_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_serialport.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_serialport_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_sql.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_sql_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_svg.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_svg_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_testlib.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_testlib_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_uiplugin.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_uitools.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_uitools_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webchannel.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webchannel_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webkit.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webkit_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webkitwidgets.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webkitwidgets_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_websockets.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_websockets_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_widgets.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_widgets_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_winextras.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_winextras_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_xml.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_xml_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_xmlpatterns.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\qt_functions.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\qt_config.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\win32\qt_config.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\win32-g++\qmake.conf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\spec_post.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\exclusive_builds.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\default_pre.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\win32\default_pre.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\resolve_config.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\exclusive_builds_post.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\default_post.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\build_pass.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\qml_debug.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\win32\rtti.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\precompile_header.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\warn_on.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\qt.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\resources.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\moc.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\win32\opengl.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\uic.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\win32\windows.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\testcase_targets.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\exceptions.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\yacc.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\lex.prf ..\WeatherApp\WeatherApp.pro D:/Ohjelmat/QT/5.5/mingw492_32/lib/qtmaind.prl D:/Ohjelmat/QT/5.5/mingw492_32/lib/Qt5Widgetsd.prl D:/Ohjelmat/QT/5.5/mingw492_32/lib/Qt5Guid.prl D:/Ohjelmat/QT/5.5/mingw492_32/lib/Qt5Cored.prl  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
+	$(ZIP) WeatherApp.zip $(SOURCES) $(DIST) ..\WeatherApp\WeatherApp.pro D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\spec_pre.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\qdevice.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\device_config.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\qconfig.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcollision.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcollision_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcore.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcore_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dinput.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dinput_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dlogic.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dlogic_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquick.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquick_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquickrenderer.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquickrenderer_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3drenderer.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3drenderer_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axbase.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axbase_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axcontainer.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axcontainer_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axserver.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axserver_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_bluetooth.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_bluetooth_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_bootstrap_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_clucene_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_concurrent.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_concurrent_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_core.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_core_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_dbus.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_dbus_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_declarative.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_declarative_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_designer.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_designer_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_designercomponents_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_enginio.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_enginio_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_gui.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_gui_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_help.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_help_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_location.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_location_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_multimedia.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_multimedia_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_multimediawidgets.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_network.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_network_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_nfc.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_nfc_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_opengl.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_opengl_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_openglextensions.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_openglextensions_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_platformsupport_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_positioning.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_positioning_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_printsupport.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_printsupport_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qml.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qml_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qmldevtools_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qmltest.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qmltest_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quick.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quick_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quickparticles_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quickwidgets.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quickwidgets_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_script.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_script_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_scripttools.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_scripttools_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_sensors.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_sensors_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_serialport.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_serialport_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_sql.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_sql_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_svg.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_svg_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_testlib.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_testlib_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_uiplugin.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_uitools.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_uitools_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webchannel.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webchannel_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webkit.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webkit_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webkitwidgets.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webkitwidgets_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_websockets.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_websockets_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_widgets.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_widgets_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_winextras.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_winextras_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_xml.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_xml_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_xmlpatterns.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\qt_functions.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\qt_config.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\win32\qt_config.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\win32-g++\qmake.conf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\spec_post.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\exclusive_builds.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\default_pre.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\win32\default_pre.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\resolve_config.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\exclusive_builds_post.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\default_post.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\build_pass.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\win32\console.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\qml_debug.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\win32\rtti.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\precompile_header.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\warn_on.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\qt.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\resources.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\moc.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\win32\opengl.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\uic.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\testcase_targets.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\exceptions.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\yacc.prf D:\Ohjelmat\QT\5.5\mingw492_32\mkspecs\features\lex.prf ..\WeatherApp\WeatherApp.pro D:/Ohjelmat/QT/5.5/mingw492_32/lib/Qt5Widgetsd.prl D:/Ohjelmat/QT/5.5/mingw492_32/lib/Qt5Guid.prl D:/Ohjelmat/QT/5.5/mingw492_32/lib/Qt5Networkd.prl D:/Ohjelmat/QT/5.5/mingw492_32/lib/Qt5Cored.prl  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) debug\main.o debug\mainwindow.o debug\moc_mainwindow.o
+	-$(DEL_FILE) debug\main.o debug\mainwindow.o debug\urldatafetcher.o debug\moc_mainwindow.o debug\moc_urldatafetcher.o
 
 distclean: clean 
 	-$(DEL_FILE) $(DESTDIR_TARGET)
@@ -105,9 +111,9 @@ compiler_no_pch_compiler_make_all:
 compiler_no_pch_compiler_clean:
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: debug/moc_mainwindow.cpp
+compiler_moc_header_make_all: debug/moc_mainwindow.cpp debug/moc_urldatafetcher.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) debug\moc_mainwindow.cpp
+	-$(DEL_FILE) debug\moc_mainwindow.cpp debug\moc_urldatafetcher.cpp
 debug/moc_mainwindow.cpp: D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/QMainWindow \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/qmainwindow.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/qwidget.h \
@@ -213,8 +219,144 @@ debug/moc_mainwindow.cpp: D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/QMain
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtGui/qtouchdevice.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/qtabwidget.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtGui/qicon.h \
+		../WeatherApp/urldatafetcher.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QObject \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QByteArray \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QNetworkAccessManager \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qnetworkaccessmanager.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QSslConfiguration \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslconfiguration.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslsocket.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qtcpsocket.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qabstractsocket.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslerror.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslcertificate.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qcryptographichash.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qdatetime.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qssl.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QFlags \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QtGlobal \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QString \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QSharedDataPointer \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QMetaType \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QNetworkRequest \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qnetworkrequest.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QUrl \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QVariant \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QNetworkReply \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qnetworkreply.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QIODevice \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QJsonDocument \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qjsondocument.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qjsonvalue.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QJsonObject \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qjsonobject.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QJsonArray \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qjsonarray.h \
 		../WeatherApp/mainwindow.h
-	D:\Ohjelmat\QT\5.5\mingw492_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -ID:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/win32-g++ -ID:/Koulujutut/qtohjelmointi/WeatherApp/Weather-App-C-/WeatherApp -ID:/Ohjelmat/QT/5.5/mingw492_32/include -ID:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets -ID:/Ohjelmat/QT/5.5/mingw492_32/include/QtGui -ID:/Ohjelmat/QT/5.5/mingw492_32/include/QtANGLE -ID:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore -I. ..\WeatherApp\mainwindow.h -o debug\moc_mainwindow.cpp
+	D:\Ohjelmat\QT\5.5\mingw492_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -ID:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/win32-g++ -ID:/Koulujutut/qtohjelmointi/WeatherApp/Weather-App-C-/WeatherApp -ID:/Ohjelmat/QT/5.5/mingw492_32/include -ID:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets -ID:/Ohjelmat/QT/5.5/mingw492_32/include/QtGui -ID:/Ohjelmat/QT/5.5/mingw492_32/include/QtANGLE -ID:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork -ID:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore -I. ..\WeatherApp\mainwindow.h -o debug\moc_mainwindow.cpp
+
+debug/moc_urldatafetcher.cpp: D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QObject \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qobject.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qobjectdefs.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qnamespace.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qglobal.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qconfig.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qfeatures.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qsystemdetection.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qprocessordetection.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qcompilerdetection.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qtypeinfo.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qtypetraits.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qsysinfo.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qlogging.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qflags.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qbasicatomic.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_bootstrap.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qgenericatomic.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_cxx11.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_gcc.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_msvc.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_armv7.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_armv6.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_armv5.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_ia64.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_mips.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_x86.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_unix.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qglobalstatic.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qmutex.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qnumeric.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qobjectdefs_impl.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qstring.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qchar.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qbytearray.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qrefcount.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qarraydata.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qstringbuilder.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qlist.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qalgorithms.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qiterator.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qbytearraylist.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qstringlist.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qregexp.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qstringmatcher.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qcoreevent.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qscopedpointer.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qmetatype.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qvarlengtharray.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qcontainerfwd.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qisenum.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qobject_impl.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QByteArray \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QNetworkAccessManager \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qnetworkaccessmanager.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QSslConfiguration \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslconfiguration.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qshareddata.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qhash.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qpair.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslsocket.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qtcpsocket.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qabstractsocket.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qiodevice.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qdebug.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qmap.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qtextstream.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qlocale.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qvariant.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qvector.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qpoint.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qset.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qcontiguouscache.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslerror.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslcertificate.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qcryptographichash.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qdatetime.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qsharedpointer.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qsharedpointer_impl.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qssl.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QFlags \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QtGlobal \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QString \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QSharedDataPointer \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QMetaType \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QNetworkRequest \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qnetworkrequest.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QUrl \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qurl.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qurlquery.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QVariant \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QNetworkReply \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qnetworkreply.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QIODevice \
+		../WeatherApp/urldatafetcher.h
+	D:\Ohjelmat\QT\5.5\mingw492_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -ID:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/win32-g++ -ID:/Koulujutut/qtohjelmointi/WeatherApp/Weather-App-C-/WeatherApp -ID:/Ohjelmat/QT/5.5/mingw492_32/include -ID:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets -ID:/Ohjelmat/QT/5.5/mingw492_32/include/QtGui -ID:/Ohjelmat/QT/5.5/mingw492_32/include/QtANGLE -ID:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork -ID:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore -I. ..\WeatherApp\urldatafetcher.h -o debug\moc_urldatafetcher.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -342,6 +484,42 @@ debug/main.o: ../WeatherApp/main.cpp ../WeatherApp/mainwindow.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtGui/qtouchdevice.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/qtabwidget.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtGui/qicon.h \
+		../WeatherApp/urldatafetcher.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QObject \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QByteArray \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QNetworkAccessManager \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qnetworkaccessmanager.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QSslConfiguration \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslconfiguration.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslsocket.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qtcpsocket.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qabstractsocket.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslerror.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslcertificate.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qcryptographichash.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qdatetime.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qssl.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QFlags \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QtGlobal \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QString \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QSharedDataPointer \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QMetaType \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QNetworkRequest \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qnetworkrequest.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QUrl \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QVariant \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QNetworkReply \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qnetworkreply.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QIODevice \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QJsonDocument \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qjsondocument.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qjsonvalue.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QJsonObject \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qjsonobject.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QJsonArray \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qjsonarray.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/QApplication \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/qapplication.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qcoreapplication.h \
@@ -457,8 +635,43 @@ debug/mainwindow.o: ../WeatherApp/mainwindow.cpp ../WeatherApp/mainwindow.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtGui/qtouchdevice.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/qtabwidget.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtGui/qicon.h \
-		ui_mainwindow.h \
+		../WeatherApp/urldatafetcher.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QObject \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QByteArray \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QNetworkAccessManager \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qnetworkaccessmanager.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QSslConfiguration \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslconfiguration.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslsocket.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qtcpsocket.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qabstractsocket.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslerror.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslcertificate.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qcryptographichash.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qdatetime.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qssl.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QFlags \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QtGlobal \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QString \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QSharedDataPointer \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QMetaType \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QNetworkRequest \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qnetworkrequest.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QUrl \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QVariant \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QNetworkReply \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qnetworkreply.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QIODevice \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QJsonDocument \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qjsondocument.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qjsonvalue.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QJsonObject \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qjsonobject.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QJsonArray \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qjsonarray.h \
+		ui_mainwindow.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/QAction \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/qaction.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/qactiongroup.h \
@@ -488,6 +701,8 @@ debug/mainwindow.o: ../WeatherApp/mainwindow.cpp ../WeatherApp/mainwindow.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/qstyle.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/qtabbar.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/qrubberband.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/QLabel \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/qlabel.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/QMenuBar \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/qmenubar.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/qmenu.h \
@@ -501,8 +716,111 @@ debug/mainwindow.o: ../WeatherApp/mainwindow.cpp ../WeatherApp/mainwindow.h \
 		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o ..\WeatherApp\mainwindow.cpp
 
+debug/urldatafetcher.o: ../WeatherApp/urldatafetcher.cpp ../WeatherApp/urldatafetcher.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QObject \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qobject.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qobjectdefs.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qnamespace.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qglobal.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qconfig.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qfeatures.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qsystemdetection.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qprocessordetection.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qcompilerdetection.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qtypeinfo.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qtypetraits.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qsysinfo.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qlogging.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qflags.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qbasicatomic.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_bootstrap.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qgenericatomic.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_cxx11.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_gcc.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_msvc.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_armv7.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_armv6.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_armv5.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_ia64.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_mips.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_x86.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qatomic_unix.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qglobalstatic.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qmutex.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qnumeric.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qobjectdefs_impl.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qstring.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qchar.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qbytearray.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qrefcount.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qarraydata.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qstringbuilder.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qlist.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qalgorithms.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qiterator.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qbytearraylist.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qstringlist.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qregexp.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qstringmatcher.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qcoreevent.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qscopedpointer.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qmetatype.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qvarlengtharray.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qcontainerfwd.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qisenum.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qobject_impl.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QByteArray \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QNetworkAccessManager \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qnetworkaccessmanager.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QSslConfiguration \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslconfiguration.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qshareddata.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qhash.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qpair.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslsocket.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qtcpsocket.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qabstractsocket.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qiodevice.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qdebug.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qmap.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qtextstream.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qlocale.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qvariant.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qvector.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qpoint.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qset.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qcontiguouscache.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslerror.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslcertificate.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qcryptographichash.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qdatetime.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qsharedpointer.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qsharedpointer_impl.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qssl.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QFlags \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QtGlobal \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QString \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QSharedDataPointer \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QMetaType \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QNetworkRequest \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qnetworkrequest.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QUrl \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qurl.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/qurlquery.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QVariant \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/QNetworkReply \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtNetwork/qnetworkreply.h \
+		D:/Ohjelmat/QT/5.5/mingw492_32/include/QtCore/QIODevice
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\urldatafetcher.o ..\WeatherApp\urldatafetcher.cpp
+
 debug/moc_mainwindow.o: debug/moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\moc_mainwindow.o debug\moc_mainwindow.cpp
+
+debug/moc_urldatafetcher.o: debug/moc_urldatafetcher.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\moc_urldatafetcher.o debug\moc_urldatafetcher.cpp
 
 ####### Install
 

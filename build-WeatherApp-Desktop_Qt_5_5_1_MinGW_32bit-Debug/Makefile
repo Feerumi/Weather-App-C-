@@ -178,6 +178,7 @@ Makefile: ../WeatherApp/WeatherApp.pro D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/wi
 		D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/resolve_config.prf \
 		D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/exclusive_builds_post.prf \
 		D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/default_post.prf \
+		D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/win32/console.prf \
 		D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/qml_debug.prf \
 		D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/win32/rtti.prf \
 		D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/precompile_header.prf \
@@ -187,15 +188,14 @@ Makefile: ../WeatherApp/WeatherApp.pro D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/wi
 		D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/moc.prf \
 		D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/win32/opengl.prf \
 		D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/uic.prf \
-		D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/win32/windows.prf \
 		D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/testcase_targets.prf \
 		D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/exceptions.prf \
 		D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/yacc.prf \
 		D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/lex.prf \
 		../WeatherApp/WeatherApp.pro \
-		D:/Ohjelmat/QT/5.5/mingw492_32/lib/qtmaind.prl \
 		D:/Ohjelmat/QT/5.5/mingw492_32/lib/Qt5Widgets.prl \
 		D:/Ohjelmat/QT/5.5/mingw492_32/lib/Qt5Gui.prl \
+		D:/Ohjelmat/QT/5.5/mingw492_32/lib/Qt5Network.prl \
 		D:/Ohjelmat/QT/5.5/mingw492_32/lib/Qt5Core.prl
 	$(QMAKE) -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" -o Makefile ..\WeatherApp\WeatherApp.pro
 D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/spec_pre.prf:
@@ -317,6 +317,7 @@ D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/win32/default_pre.prf:
 D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/resolve_config.prf:
 D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/exclusive_builds_post.prf:
 D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/default_post.prf:
+D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/win32/console.prf:
 D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/qml_debug.prf:
 D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/win32/rtti.prf:
 D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/precompile_header.prf:
@@ -326,15 +327,14 @@ D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/resources.prf:
 D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/moc.prf:
 D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/win32/opengl.prf:
 D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/uic.prf:
-D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/win32/windows.prf:
 D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/testcase_targets.prf:
 D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/exceptions.prf:
 D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/yacc.prf:
 D:/Ohjelmat/QT/5.5/mingw492_32/mkspecs/features/lex.prf:
 ../WeatherApp/WeatherApp.pro:
-D:/Ohjelmat/QT/5.5/mingw492_32/lib/qtmaind.prl:
 D:/Ohjelmat/QT/5.5/mingw492_32/lib/Qt5Widgets.prl:
 D:/Ohjelmat/QT/5.5/mingw492_32/lib/Qt5Gui.prl:
+D:/Ohjelmat/QT/5.5/mingw492_32/lib/Qt5Network.prl:
 D:/Ohjelmat/QT/5.5/mingw492_32/lib/Qt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" -o Makefile ..\WeatherApp\WeatherApp.pro

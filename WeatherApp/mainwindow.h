@@ -6,6 +6,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QLabel>
+#include <QTime>
 
 
 namespace Ui {
@@ -18,6 +20,9 @@ class MainWindow : public QMainWindow
 public:
     URLDataFetcher * f;
     QNetworkAccessManager * nam;
+    bool fiveDaysQuery;
+    bool currentWeatherQuery;
+    QLabel * currentIconLabel;
     QString iconID;
     QString description;
     QString cityName;
@@ -33,6 +38,9 @@ private:
 public slots:
     void loadImage();
     void getJSON();
+    void getFiveDaysJSON();
+    void parseCurrentWeatherData(QJsonDocument* doc);
+    void parseFiveDaysWeatherData(QJsonDocument* doc);
     void serviceRequestFinished(QNetworkReply* reply);
 };
 

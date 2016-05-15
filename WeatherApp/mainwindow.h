@@ -22,6 +22,8 @@ public:
     QNetworkAccessManager * nam;
     bool fiveDaysQuery;
     bool currentWeatherQuery;
+    bool compareWeatherQuery;
+    bool firstCity;
     QLabel * currentIconLabel;
     QString iconID;
     QString description;
@@ -30,6 +32,13 @@ public:
     QString temperature;
 public:
     explicit MainWindow(QWidget *parent = 0);
+    void getIcon(QString iconID);
+    void sleep();
+    void currentWeatherHelper(QString cityName);
+    void parseCompareCitys();
+    void parseCurrentWeatherData(QJsonDocument* doc);
+    void parseFiveDaysWeatherData(QJsonDocument* doc);
+    void getJSON();
     ~MainWindow();
 
 private:
@@ -37,10 +46,9 @@ private:
 
 public slots:
     void loadImage();
-    void getJSON();
-    void getFiveDaysJSON();
-    void parseCurrentWeatherData(QJsonDocument* doc);
-    void parseFiveDaysWeatherData(QJsonDocument* doc);
+    void compareWeathersPressed();
+    void currentWeatherPressed();
+    void fiveDaysForecastPressed();
     void serviceRequestFinished(QNetworkReply* reply);
 };
 
